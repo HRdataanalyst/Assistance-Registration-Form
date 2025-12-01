@@ -741,19 +741,23 @@ input[type="date"] {
                       placeholder="เช่น หลังคารั่ว พื้นบ้านทรุด เครื่องใช้ไฟฟ้าเสียหายจำนวนมาก ฯลฯ"></textarea>
           </div>
 
-          <!-- Needs Section -->
+          <!-- Urgent Needs Section -->
           <div class="section-block">
             <h2 class="font-bold mb-0" style="color: #15803d; font-size: 1.1rem;">
-              สิ่งที่ต้องการความช่วยเหลือ
+              ความต้องการเร่งด่วน (Urgent Needs)
             </h2>
           </div>
 
           <div class="mb-4">
-            <label class="block mb-2 font-medium" style="color: #334155;">
-              เลือกได้มากกว่า 1 รายการ <span style="color: #ef4444;">*</span>
+            <label class="block mb-1 font-medium" style="color: #334155;">
+              เลือก 3 อันดับแรกที่ต้องการความช่วยเหลือเร่งด่วน <span style="color: #ef4444;">*</span>
             </label>
+            <p style="font-size: 0.9rem; color: #64748b; margin-bottom: 0.5rem;">
+              กรุณาเลือกไม่เกิน 3 รายการ
+            </p>
 
             <div class="space-y-1.5">
+              <!-- อาหาร/น้ำดื่ม -->
               <label class="flex items-center cursor-pointer p-2 rounded"
                      style="background-color: #f8fafc; border: 1px solid #e2e8f0;">
                 <input type="checkbox" name="needs" value="อาหาร/น้ำดื่ม"
@@ -761,34 +765,55 @@ input[type="date"] {
                 <span style="color: #475569;">อาหาร/น้ำดื่ม</span>
               </label>
 
+              <!-- ยา / ของใช้จำเป็น -->
               <label class="flex items-center cursor-pointer p-2 rounded"
                      style="background-color: #f8fafc; border: 1px solid #e2e8f0;">
-                <input type="checkbox" name="needs" value="ยา/ของใช้จำเป็น"
+                <input type="checkbox" name="needs" value="ยา / ของใช้จำเป็น"
                        class="mr-2" style="width: 16px; height: 16px;">
-                <span style="color: #475569;">ยา/ของใช้จำเป็น</span>
+                <span style="color: #475569;">ยา / ของใช้จำเป็น</span>
               </label>
 
+              <!-- ผ้าอ้อม–นมเด็ก -->
               <label class="flex items-center cursor-pointer p-2 rounded"
                      style="background-color: #f8fafc; border: 1px solid #e2e8f0;">
-                <input type="checkbox" name="needs" value="เสื้อผ้า/ผ้าห่ม"
+                <input type="checkbox" name="needs" value="ผ้าอ้อม–นมเด็ก"
                        class="mr-2" style="width: 16px; height: 16px;">
-                <span style="color: #475569;">เสื้อผ้า/ผ้าห่ม</span>
+                <span style="color: #475569;">ผ้าอ้อม–นมเด็ก</span>
               </label>
 
+              <!-- ที่พักชั่วคราว -->
               <label class="flex items-center cursor-pointer p-2 rounded"
                      style="background-color: #f8fafc; border: 1px solid #e2e8f0;">
-                <input type="checkbox" name="needs" value="อาหารเด็ก/นมผง"
+                <input type="checkbox" name="needs" value="ที่พักชั่วคราว"
                        class="mr-2" style="width: 16px; height: 16px;">
-                <span style="color: #475569;">อาหารเด็ก/นมผง</span>
+                <span style="color: #475569;">ที่พักชั่วคราว</span>
               </label>
 
+              <!-- อุปกรณ์ทำความสะอาด / ฟื้นฟูบ้าน -->
               <label class="flex items-center cursor-pointer p-2 rounded"
                      style="background-color: #f8fafc; border: 1px solid #e2e8f0;">
-                <input type="checkbox" name="needs" value="ของใช้ผู้สูงอายุ"
+                <input type="checkbox" name="needs" value="อุปกรณ์ทำความสะอาด / ฟื้นฟูบ้าน"
                        class="mr-2" style="width: 16px; height: 16px;">
-                <span style="color: #475569;">ของใช้ผู้สูงอายุ</span>
+                <span style="color: #475569;">อุปกรณ์ทำความสะอาด / ฟื้นฟูบ้าน</span>
               </label>
 
+              <!-- ซ่อมไฟฟ้า / ซ่อมบ้าน -->
+              <label class="flex items-center cursor-pointer p-2 rounded"
+                     style="background-color: #f8fafc; border: 1px solid #e2e8f0;">
+                <input type="checkbox" name="needs" value="ซ่อมไฟฟ้า / ซ่อมบ้าน"
+                       class="mr-2" style="width: 16px; height: 16px;">
+                <span style="color: #475569;">ซ่อมไฟฟ้า / ซ่อมบ้าน</span>
+              </label>
+
+              <!-- ความช่วยเหลือด้านการเงิน -->
+              <label class="flex items-center cursor-pointer p-2 rounded"
+                     style="background-color: #f8fafc; border: 1px solid #e2e8f0;">
+                <input type="checkbox" name="needs" value="ความช่วยเหลือด้านการเงิน"
+                       class="mr-2" style="width: 16px; height: 16px;">
+                <span style="color: #475569;">ความช่วยเหลือด้านการเงิน</span>
+              </label>
+
+              <!-- อื่นๆ -->
               <label class="flex items-center cursor-pointer p-2 rounded"
                      style="background-color: #f8fafc; border: 1px solid #e2e8f0;">
                 <input type="checkbox" id="other-needs-checkbox" name="needs" value="อื่นๆ"
@@ -799,13 +824,112 @@ input[type="date"] {
               <textarea id="other-needs-detail" rows="2"
                         class="w-full px-3 py-2 border rounded mt-1"
                         style="border-color: #cbd5e1; display: none;"
-                        placeholder="ระบุรายละเอียด"></textarea>
+                        placeholder="ระบุรายละเอียดอื่นๆ"></textarea>
             </div>
 
             <div id="needs-error" class="mt-1" style="color: #ef4444; display: none;">
-              กรุณาเลือกอย่างน้อย 1 รายการ
+              กรุณาเลือกอย่างน้อย 1 รายการ (ไม่เกิน 3 รายการ)
             </div>
           </div>
+          
+                    <!-- Urgent Needs Section (อยู่แล้วจากรอบก่อนของคุณ) -->
+          <!-- ... บล็อกความต้องการเร่งด่วน (Urgent Needs) ของคุณอยู่ตรงนี้ ... -->
+
+          <!-- Assistance Received Section -->
+          <div class="section-block">
+            <h2 class="font-bold mb-0" style="color: #15803d; font-size: 1.1rem;">
+              การช่วยเหลือที่เคยได้รับ (Assistance Received)
+            </h2>
+          </div>
+
+          <!-- เคยได้รับจาก (checkbox) -->
+          <div class="mb-3 form-group">
+            <label class="block mb-2 font-medium" style="color: #334155;">
+              เคยได้รับการช่วยเหลือจากหน่วยงานใดบ้าง
+            </label>
+
+            <div class="flex flex-wrap gap-2">
+              <!-- อบต./เทศบาล -->
+              <label class="flex items-center cursor-pointer px-3 py-2 rounded border"
+                     style="border-color:#e2e8f0; background-color:#f8fafc;">
+                <input type="checkbox" name="assist_sources" value="อบต./เทศบาล"
+                       class="mr-2" style="width:16px; height:16px;">
+                <span style="color:#475569;">อบต./เทศบาล</span>
+              </label>
+
+              <!-- พม. -->
+              <label class="flex items-center cursor-pointer px-3 py-2 rounded border"
+                     style="border-color:#e2e8f0; background-color:#f8fafc;">
+                <input type="checkbox" name="assist_sources" value="พม."
+                       class="mr-2" style="width:16px; height:16px;">
+                <span style="color:#475569;">พม.</span>
+              </label>
+
+              <!-- ปภ. -->
+              <label class="flex items-center cursor-pointer px-3 py-2 rounded border"
+                     style="border-color:#e2e8f0; background-color:#f8fafc;">
+                <input type="checkbox" name="assist_sources" value="ปภ."
+                       class="mr-2" style="width:16px; height:16px;">
+                <span style="color:#475569;">ปภ.</span>
+              </label>
+
+              <!-- องค์กรเอกชน -->
+              <label class="flex items-center cursor-pointer px-3 py-2 rounded border"
+                     style="border-color:#e2e8f0; background-color:#f8fafc;">
+                <input type="checkbox" name="assist_sources" value="องค์กรเอกชน"
+                       class="mr-2" style="width:16px; height:16px;">
+                <span style="color:#475569;">องค์กรเอกชน</span>
+              </label>
+
+              <!-- อาสา -->
+              <label class="flex items-center cursor-pointer px-3 py-2 rounded border"
+                     style="border-color:#e2e8f0; background-color:#f8fafc;">
+                <input type="checkbox" name="assist_sources" value="อาสา"
+                       class="mr-2" style="width:16px; height:16px;">
+                <span style="color:#475569;">อาสา</span>
+              </label>
+            </div>
+          </div>
+
+          <!-- ได้รับสิ่งของ/บริการ -->
+          <div class="mb-3 form-group">
+            <label for="assist-items" class="block mb-1 font-medium" style="color:#334155;">
+              ได้รับสิ่งของ/บริการ
+            </label>
+            <input type="text" id="assist-items"
+                   class="w-full px-3 py-2 border rounded"
+                   style="border-color:#cbd5e1;"
+                   placeholder="เช่น ถุงยังชีพ อาหาร น้ำดื่ม อุปกรณ์ทำความสะอาด ฯลฯ">
+          </div>
+
+          <!-- วันที่รับล่าสุด -->
+          <div class="mb-3 form-group">
+            <label for="assist-last-date" class="block mb-1 font-medium" style="color:#334155;">
+              วันที่รับล่าสุด
+            </label>
+            <input type="date" id="assist-last-date"
+                   class="w-full px-3 py-2 border rounded"
+                   style="border-color:#cbd5e1;">
+          </div>
+
+          <!-- ผู้ป่วยโรคประจำตัวสำคัญ -->
+          <div class="mb-4 form-group">
+            <label for="chronic-disease" class="block mb-1 font-medium" style="color:#334155;">
+              ผู้ป่วยโรคประจำตัวสำคัญ (ระบุ)
+            </label>
+            <input type="text" id="chronic-disease"
+                   class="w-full px-3 py-2 border rounded"
+                   style="border-color:#cbd5e1;"
+                   placeholder="เช่น เบาหวาน ความดัน หอบหืด หัวใจ ฯลฯ">
+          </div>
+
+          <!-- กล่องแสดงข้อความ error ตอนบันทึกฟอร์มไม่สำเร็จ -->
+          <div id="form-error" class="mb-3 p-2 rounded"
+               style="background-color: #fee2e2; color: #991b1b; display: none; font-size: 0.85rem;">
+            เกิดข้อผิดพลาด กรุณาลองใหม่อีกครั้ง
+          </div>
+
+
 
 
 
@@ -1100,6 +1224,22 @@ if (otherNeedsCheckbox && otherNeedsDetail) {
     }
   });
 }
+    // Limit ความต้องการเร่งด่วน เลือกได้ไม่เกิน 3 รายการ
+const allNeedsCheckboxes = document.querySelectorAll('input[name="needs"]');
+if (allNeedsCheckboxes && allNeedsCheckboxes.length > 0) {
+  allNeedsCheckboxes.forEach(cb => {
+    cb.addEventListener('change', function () {
+      const checked = document.querySelectorAll('input[name="needs"]:checked');
+      if (checked.length > 3) {
+        // ถ้าเกิน 3 ให้ยกเลิกช่องที่เพิ่งติ๊ก และแจ้งเตือน
+        this.checked = false;
+        alert('กรุณาเลือกไม่เกิน 3 รายการ (3 อันดับแรกที่ต้องการความช่วยเหลือเร่งด่วน)');
+      }
+    });
+  });
+}
+
+    
 
 // Show/hide "Big C other service" detail
 if (bigcOtherCheckbox && bigcOtherDetail) {
@@ -1152,6 +1292,24 @@ if (bigcOtherCheckbox && bigcOtherDetail) {
 
         const damageNote = document.getElementById('damage-note').value.trim();
 
+        // Assistance Received
+        const assistCheckboxes = document.querySelectorAll('input[name="assist_sources"]:checked');
+        const assistSources = Array.from(assistCheckboxes)
+          .map(cb => cb.value)
+          .join(', ');
+
+        const assistItems = document.getElementById('assist-items')
+          ? document.getElementById('assist-items').value.trim()
+          : '';
+
+        const assistLastDate = document.getElementById('assist-last-date')
+          ? document.getElementById('assist-last-date').value.trim()
+          : '';
+
+        const chronicDisease = document.getElementById('chronic-disease')
+          ? document.getElementById('chronic-disease').value.trim()
+          : '';
+
         const formData = {
           // ใช้ id ให้ตรงกับ input จริงในฟอร์ม
           name: document.getElementById('name').value.trim(),
@@ -1194,7 +1352,13 @@ if (bigcOtherCheckbox && bigcOtherDetail) {
           damage_assets: damageAssets,
           damage_note: damageNote,
 
-          // สิ่งที่ต้องการความช่วยเหลือ
+          // การช่วยเหลือที่เคยได้รับ (Assistance Received)
+          assist_sources: assistSources,
+          assist_items: assistItems,
+          assist_last_date: assistLastDate,
+          chronic_disease: chronicDisease,
+
+          // ความต้องการเร่งด่วน (Urgent Needs)
           needs: needs,
           other_needs: otherNeedsCheckbox && otherNeedsCheckbox.checked
             ? otherNeedsDetail.value.trim()
