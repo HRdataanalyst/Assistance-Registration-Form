@@ -45,6 +45,16 @@ label {
   font-size: 1rem;
 }
 
+/* ปรับขนาด select (ช่องเพศ) ให้สูงเท่าช่องอื่นบนมือถือ */
+select {
+  width: 100%;
+  padding: 0.5rem 0.75rem;      /* เท่า ๆ กับ px-3 py-2 */
+  border-radius: 0.25rem;       /* เท่ากับ .rounded ของช่องอื่น */
+  border: 1px solid #cbd5e1;    /* สีเส้นขอบเหมือนช่องอื่น */
+  min-height: 44px;             /* บังคับสูงขั้นต่ำไม่ให้เตี้ย */
+  box-sizing: border-box;
+}
+
 /* ปรับช่องวันเกิด (input type="date") ให้สูงเท่าช่องอื่น และชิดซ้าย */
 input[type="date"] {
   width: 100%;
