@@ -45,6 +45,18 @@ label {
   font-size: 1rem;
 }
 
+/* ปรับช่องวันเกิด (input type="date") ให้สูงเท่าช่องอื่น และชิดซ้าย */
+input[type="date"] {
+  width: 100%;
+  padding: 0.65rem 0.75rem;     /* ให้ padding เท่าช่อง text */
+  border-radius: 0.5rem;        /* มุมโค้งเท่าช่องอื่น */
+  border: 1px solid #cbd5e1;    /* สีเส้นขอบเหมือนช่องอื่น */
+  min-height: 44px;             /* บังคับความสูงขั้นต่ำให้ไม่เตี้ย */
+  line-height: 1.25rem;
+  text-align: left;             /* ให้ข้อความวันที่ชิดซ้าย */
+  box-sizing: border-box;
+}
+
 /* เว้นระยะคำถาม */
 .form-group {
   margin-bottom: 1.5rem;
