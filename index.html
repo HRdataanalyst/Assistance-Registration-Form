@@ -767,21 +767,22 @@ if (postalInput) {
           .join(', ');
 
         const formData = {
-          name: document.getElementById('first-name').value.trim(),
-          surname: document.getElementById('last-name').value.trim(),
-          phone: document.getElementById('phone').value.trim(),
-          birthdate: document.getElementById('birthdate').value,
-          id_card: document.getElementById('id-card').value.trim(),
-          address_detail: document.getElementById('address-detail').value.trim(),
-          district: document.getElementById('district').value.trim(),
-          subdistrict: document.getElementById('subdistrict').value.trim(),
-          postal_code: document.getElementById('postal-code').value.trim(),
-          needs: needs,
-          other_needs: otherNeedsCheckbox && otherNeedsCheckbox.checked
-            ? otherNeedsDetail.value.trim()
-            : '',
-          submitted_at: new Date().toISOString()
-        };
+  // ใช้ id ให้ตรงกับ input จริงในฟอร์ม
+  name: document.getElementById('name').value.trim(),
+  surname: document.getElementById('surname').value.trim(),
+  phone: document.getElementById('phone').value.trim(),
+  birthdate: document.getElementById('birthdate').value,
+  id_card: document.getElementById('id-card').value.trim(),
+  address_detail: document.getElementById('address-detail').value.trim(),
+  district: document.getElementById('district').value.trim(),
+  subdistrict: document.getElementById('subdistrict').value.trim(),
+  postal_code: document.getElementById('postal-code').value.trim(),
+  needs: needs,
+  other_needs: otherNeedsCheckbox && otherNeedsCheckbox.checked
+    ? otherNeedsDetail.value.trim()
+    : '',
+  submitted_at: new Date().toISOString()
+};
 
         submitBtn.disabled = true;
         submitBtn.textContent = 'กำลังบันทึก...';
