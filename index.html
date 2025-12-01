@@ -588,26 +588,45 @@ label {
       const newSubdistricts = [...new Set(filtered.map(r => r.subdistrict).filter(Boolean))];
       const newPostals = [...new Set(filtered.map(r => r.postal).filter(Boolean))];
 
+      // อัปเดต datalist ให้แคบลงตามข้อมูลที่ match
       setOptions(districtList, newDistricts);
       setOptions(subdistrictList, newSubdistricts);
       setOptions(postalList, newPostals);
 
-      if (filtered.length === 1) {
-        if (!dVal) districtInput.value = filtered[0].district || '';
-        if (!sVal) subdistrictInput.value = filtered[0].subdistrict || '';
-        if (!pVal) postalInput.value = filtered[0].postal || '';
+      // ✅ เงื่อนไข auto-fill ใหม่:
+      // ถ้า "เหลือค่าเดียว" ในคอลัมน์ไหน และช่องนั้นยังว่าง → เติมให้อัตโนมัติ
+
+      // อำเภอ
+      if (newDistricts.length === 1 && !dVal) {
+        districtInput.value = newDistricts[0] || '';
+      }
+
+      // ตำบล
+      if (newSubdistricts.length === 1 && !sVal) {
+        subdistrictInput.value = newSubdistricts[0] || '';
+      }
+
+      // รหัสไปรษณีย์
+      if (newPostals.length === 1 && !pVal) {
+        postalInput.value = newPostals[0] || '';
       }
     }
 
     if (districtInput) {
-      districtInput.addEventListener('input', filterLocationData);
-    }
-    if (subdistrictInput) {
-      subdistrictInput.addEventListener('input', filterLocationData);
-    }
-    if (postalInput) {
-      postalInput.addEventListener('input', filterLocationData);
-    }
+  ['input', 'change'].forEach(evt => {
+    districtInput.addEventListener(evt, filterLocationData);
+  });
+}
+if (subdistrictInput) {
+  ['input', 'change'].forEach(evt => {
+    subdistrictInput.addEventListener(evt, filterLocationData);
+  });
+}
+if (postalInput) {
+  ['input', 'change'].forEach(evt => {
+    postalInput.addEventListener(evt, filterLocationData);
+  });
+}
 
     // Home Page Logic
     const startRegisterBtn = document.getElementById('start-register-btn');
