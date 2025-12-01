@@ -767,8 +767,8 @@ if (postalInput) {
           .join(', ');
 
         const formData = {
-          name: document.getElementById('name').value.trim(),
-          surname: document.getElementById('surname').value.trim(),
+          name: document.getElementById('first-name').value.trim(),
+          surname: document.getElementById('last-name').value.trim(),
           phone: document.getElementById('phone').value.trim(),
           birthdate: document.getElementById('birthdate').value,
           id_card: document.getElementById('id-card').value.trim(),
@@ -788,8 +788,23 @@ if (postalInput) {
         submitBtn.style.opacity = '0.5';
         formError.style.display = 'none';
 
-        google.script.run
-          .withSuccessHandler(function (result) {
+        // ใช้ Web App URL ตัวเดียวกับที่ใช้โหลด location
+        const saveUrl = 'https://script.google.com/macros/s/AKfycbwPJgtSnPq-tudglPqdhUEMfIxvnQEEiRNdwyHaiHjzDEfpkZHnQZu8vXGtHZJRV4_S/exec?action=saveRegistration';
+
+        fetch(saveUrl, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(formData)
+        })
+          .then(function (res) {
+            if (!res.ok) {
+              throw new Error('HTTP status ' + res.status);
+            }
+            return res.json();
+          })
+          .then(function (result) {
             submitBtn.disabled = false;
             submitBtn.textContent = 'ยืนยันการลงทะเบียน';
             submitBtn.style.opacity = '1';
@@ -804,7 +819,6 @@ if (postalInput) {
 
               document.getElementById('registration-page').style.display = 'none';
               document.getElementById('home-page').style.display = 'flex';
-
             } else {
               formError.textContent = (result && result.message)
                 ? result.message
@@ -812,15 +826,15 @@ if (postalInput) {
               formError.style.display = 'block';
             }
           })
-          .withFailureHandler(function (error) {
+          .catch(function (error) {
+            console.error('saveRegistration error:', error);
             submitBtn.disabled = false;
             submitBtn.textContent = 'ยืนยันการลงทะเบียน';
             submitBtn.style.opacity = '1';
 
             formError.textContent = 'เกิดข้อผิดพลาดในการเชื่อมต่อเซิร์ฟเวอร์: ' + error;
             formError.style.display = 'block';
-          })
-          .saveRegistration(formData);
+          });
       });
     }
 
