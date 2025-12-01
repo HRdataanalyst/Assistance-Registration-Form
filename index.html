@@ -101,6 +101,7 @@ input[type="date"] {
     padding: 0.5rem 0.75rem;
     width: 100%;
     text-align: left;
+    }
   </style>
 
   <style>
@@ -230,8 +231,8 @@ input[type="date"] {
           กรุณายอมรับนโยบายก่อนดำเนินการต่อ
         </div>
 
-        <!-- Error เผื่อใช้กรณีระบบมีปัญหา -->
-        <div id="form-error" class="mb-3 p-2 rounded"
+        <!-- Error เผื่อใช้กรณีระบบมีปัญหาในหน้า PDPA (ถ้าอยากใช้ภายหลัง) -->
+        <div id="pdpa-system-error" class="mb-3 p-2 rounded"
              style="background-color: #fee2e2; color: #991b1b; display: none; font-size: 0.75rem;">
           เกิดข้อผิดพลาด กรุณาลองใหม่อีกครั้ง
         </div>
@@ -499,6 +500,12 @@ input[type="date"] {
             <div id="needs-error" class="mt-1" style="color: #ef4444; display: none;">
               กรุณาเลือกอย่างน้อย 1 รายการ
             </div>
+          </div>
+
+          <!-- กล่องแสดงข้อความ error ตอนบันทึกฟอร์มไม่สำเร็จ -->
+          <div id="form-error" class="mb-3 p-2 rounded"
+               style="background-color: #fee2e2; color: #991b1b; display: none; font-size: 0.85rem;">
+            เกิดข้อผิดพลาด กรุณาลองใหม่อีกครั้ง
           </div>
 
           <div class="flex gap-2">
