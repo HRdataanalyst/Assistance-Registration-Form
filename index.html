@@ -796,13 +796,13 @@ if (postalInput) {
         submitBtn.style.opacity = '0.5';
         formError.style.display = 'none';
 
-        // ใช้ Web App URL ตัวเดียวกับที่ใช้โหลด location
+        // ใช้ Web App URL ตัวเดียวกับที่ใช้โหลด location (ต้องเป็น 1 บรรทัดเต็ม ห้ามมี ... หรือขึ้นบรรทัดใหม่กลาง URL)
         const saveUrl = 'https://script.google.com/macros/s/AKfycbwPJgtSnPq-tudglPqdhUEMfIxvnQEEiRNdwyHaiHjzDEfpkZHnQZu8vXGtHZJRV4_S/exec?action=saveRegistration';
-
         fetch(saveUrl, {
           method: 'POST',
+          // ใช้ text/plain เพื่อไม่ให้ browser ส่ง preflight OPTIONS (แก้ปัญหา CORS / Failed to fetch)
           headers: {
-            'Content-Type': 'application/json'
+            'Content-Type': 'text/plain;charset=utf-8'
           },
           body: JSON.stringify(formData)
         })
@@ -826,7 +826,7 @@ if (postalInput) {
               }
 
               document.getElementById('registration-page').style.display = 'none';
-              document.getElementById('home-page').style.display = 'flex';
+              document.getElementById('home-page').style.display = 'block';
             } else {
               formError.textContent = (result && result.message)
                 ? result.message
@@ -835,7 +835,7 @@ if (postalInput) {
             }
           })
           .catch(function (error) {
-            console.error('saveRegistration error:', error);
+            console.error('Error saving registration:', error);
             submitBtn.disabled = false;
             submitBtn.textContent = 'ยืนยันการลงทะเบียน';
             submitBtn.style.opacity = '1';
