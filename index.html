@@ -511,22 +511,35 @@ label {
     const subdistrictList = document.getElementById('subdistrict-list');
     const postalList = document.getElementById('postal-list');
 
-    // โหลดข้อมูลจาก Google Sheet ตอนหน้าเว็บพร้อม
+    // โหลดข้อมูลจาก Google Sheet ตอนหน้าเว็บพร้อม (ใช้ fetch เรียก Web App แทน google.script.run)
     window.addEventListener('load', function () {
-      if (typeof google === 'undefined' || !google.script || !google.script.run) {
-        // ถ้าเปิดทดสอบแบบไฟล์ธรรมดา (ไม่ผ่าน Apps Script) ส่วนนี้จะไม่ทำงาน
-        return;
-      }
+      // ใส่ URL Web App ของคุณที่คืนข้อมูล location เป็น JSON
+      const url = 'https://script.google.com/macros/s/AKfycbwPJgtSnPq-tudglPqdhUEMfIxvnQEEiRNdwyHaiHjzDEfpkZHnQZu8vXGtHZJRV4_S/exec?action=getLocationData';
 
-      google.script.run
-        .withSuccessHandler(function (data) {
-          locationData = data || [];
-          buildAllDatalists();
+      fetch(url)
+        .then(function (res) {
+          if (!res.ok) {
+            throw new Error('HTTP status ' + res.status);
+          }
+          return res.json();
         })
-        .withFailureHandler(function (err) {
+        .then(function (data) {
+          // data ควรจะเป็น array ของ object: [{ district, subdistrict, postal }, ...]
+          if (Array.isArray(data)) {
+            locationData = data;
+          } else if (Array.isArray(data.data)) {
+            // เผื่อ backend ห่อเป็น {data:[...]}
+            locationData = data.data;
+          } else {
+            locationData = [];
+          }
+
+          console.log('locationData loaded:', locationData.length, 'records');
+          buildAllDatalists(); // สร้าง datalist รอบแรก
+        })
+        .catch(function (err) {
           console.error('โหลดข้อมูลอำเภอ/ตำบล/รหัสไปรษณีย์ไม่สำเร็จ:', err);
-        })
-        .getLocationData();
+        });
     });
 
     // สร้าง datalist จากข้อมูลทั้งหมดครั้งแรก
