@@ -47,11 +47,16 @@ label {
 
 /* ปรับขนาด select (ช่องเพศ) ให้สูงเท่าช่องอื่นบนมือถือ */
 select {
+  -webkit-appearance: none;   /* ตัดสไตล์ native บน iOS */
+  appearance: none;
+
   width: 100%;
-  padding: 0.5rem 0.75rem;      /* เท่า ๆ กับ px-3 py-2 */
-  border-radius: 0.25rem;       /* เท่ากับ .rounded ของช่องอื่น */
-  border: 1px solid #cbd5e1;    /* สีเส้นขอบเหมือนช่องอื่น */
-  min-height: 44px;             /* บังคับสูงขั้นต่ำไม่ให้เตี้ย */
+  padding: 0.65rem 0.75rem;   /* ให้หนาขึ้นเท่าช่อง input */
+  border-radius: 0.25rem;     /* มุมโค้งเหมือนช่องอื่น */
+  border: 1px solid #cbd5e1;
+  height: 44px;               /* ฟิกความสูงเท่าช่องอื่น */
+  line-height: 1.25rem;
+  background-color: #ffffff;
   box-sizing: border-box;
 }
 
