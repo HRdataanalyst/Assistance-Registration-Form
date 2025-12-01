@@ -19,15 +19,21 @@
   box-sizing: border-box;
 }
 
-/* หน้าเว็บปกติ ไม่บังคับขนาด ไม่ทำ responsive */
+/* หน้าเว็บสำหรับมือถือ ให้เต็มสูงเท่าหน้าจอ และไม่มีพื้นหลังสีเทา */
 html, body {
   margin: 0;
   padding: 0;
   overflow-x: hidden;
   overflow-y: auto;
   font-family: "Prompt", sans-serif;
-  background-color: #f8fafc;
-  font-size: 16px;   /* ขนาดปกติของเว็บ */
+  background-color: #ffffff;   /* พื้นหลังขาวล้วน */
+  font-size: 16px;
+  height: 100%;                /* ให้ body สูงเท่าหน้าจอ */
+}
+
+/* ป้องกันข้อความหรือเนื้อหายาว ๆ ล้นออกจอ */
+body {
+  word-wrap: break-word;
 }
 
 /* input/label */
@@ -56,20 +62,23 @@ label {
   letter-spacing: 0.05em;
 }
 
-/* container หลักของเว็บ (ไม่ทำ responsive) */
+/* container หลักของเว็บ */
 .app-container {
   width: 100%;
   margin: 0 auto;
-  height: auto;
+  min-height: 100vh;    /* สูงอย่างน้อยเท่าหน้าจอ */
+  display: block;
 }
 
-/* container ของแต่ละหน้า */
+/* container ของแต่ละหน้า: ให้เต็มจอ แต่เลื่อนได้ถ้าฟอร์มยาว */
 .page-container {
   width: 100%;
   margin: 0 auto;
-  padding: 0 24px;  /* ให้มีขอบซ้ายขวาพื้นฐานแบบเว็บ */
+  padding: 0 16px 16px; /* ลด padding ให้พอดีหน้าจอมือถือ */
+  min-height: 100vh;    /* อย่างน้อยเท่าความสูงจอ */
+  display: flex;
+  flex-direction: column;
 }
-
   </style>
 
   <style>
@@ -79,7 +88,7 @@ label {
   </style>
 </head>
 
-<body class="bg-[#f8fafc]">
+<body>
   <div class="app-container">
 
     <!-- Popup แจ้งผลสำเร็จ -->
@@ -193,19 +202,20 @@ label {
           </label>
         </div>
 
-        <!-- Error -->
+        <!-- Error: ยังใช้เหมือนเดิม -->
         <div id="pdpa-error" class="mb-3 p-2 rounded"
              style="background-color: #fee2e2; color: #b91c1c; display: none; font-size: 0.85rem;">
           กรุณายอมรับนโยบายก่อนดำเนินการต่อ
         </div>
 
-        <!-- ปุ่ม -->
+        <!-- Error เผื่อใช้กรณีระบบมีปัญหา -->
         <div id="form-error" class="mb-3 p-2 rounded"
              style="background-color: #fee2e2; color: #991b1b; display: none; font-size: 0.75rem;">
           เกิดข้อผิดพลาด กรุณาลองใหม่อีกครั้ง
         </div>
 
-        <div class="flex gap-2">
+        <!-- ปุ่มย้อนกลับ + ปุ่มยอมรับ (ปุ่มนี้จะเห็นตลอด แต่ disabled ก่อนติ๊ก) -->
+        <div class="flex gap-2 mt-2">
           <button id="back-home-btn"
                   class="flex-1 py-2 px-3 rounded font-medium"
                   style="background-color: #e2e8f0; color: #475569;">
@@ -213,7 +223,7 @@ label {
           </button>
           <button id="consent-btn"
                   class="flex-1 py-2 px-3 rounded font-medium"
-                  style="background-color: #15803ด; color: white; opacity: 0.5; cursor: not-allowed;"
+                  style="background-color: #15803d; color: white; opacity: 0.5; cursor: not-allowed;"
                   disabled>
             ยอมรับและดำเนินการต่อ
           </button>
@@ -603,19 +613,26 @@ label {
     const backHomeBtn = document.getElementById('back-home-btn');
 
     if (consentCheckbox && consentBtn && backHomeBtn) {
+      // ตั้งค่าเริ่มต้น: ปุ่มเห็นแต่กดไม่ได้
+      consentBtn.disabled = true;
+      consentBtn.style.opacity = '0.5';
+      consentBtn.style.cursor = 'not-allowed';
+      consentBtn.style.backgroundColor = '#15803d';
+
       consentCheckbox.addEventListener('change', function () {
         if (this.checked) {
+          consentBtn.disabled = false;
           consentBtn.style.opacity = '1';
           consentBtn.style.cursor = 'pointer';
-          consentBtn.disabled = false;
           consentBtn.style.backgroundColor = '#15803d';
           pdpaError.style.display = 'none';
         } else {
+          consentBtn.disabled = true;
           consentBtn.style.opacity = '0.5';
           consentBtn.style.cursor = 'not-allowed';
-          consentBtn.disabled = true;
+          consentBtn.style.backgroundColor = '#15803d';
         }
-      });
+      }); 
 
       consentBtn.addEventListener('click', function () {
         if (consentCheckbox.checked) {
@@ -628,12 +645,8 @@ label {
 
       backHomeBtn.addEventListener('click', function () {
         pdpaError.style.display = 'none';
-        consentCheckbox.checked = false;
-        consentBtn.style.opacity = '0.5';
-        consentBtn.style.cursor = 'not-allowed';
-        consentBtn.disabled = true;
         document.getElementById('pdpa-page').style.display = 'none';
-        document.getElementById('home-page').style.display = 'flex';
+        document.getElementById('home-page').style.display = 'block';
       });
     }
 
