@@ -1395,30 +1395,41 @@ if (bigcOtherCheckbox && bigcOtherDetail) {
             submitBtn.style.opacity = '1';
 
             if (result && result.success) {
-              document.getElementById('successPopup').style.display = 'flex';
+    // แสดง popup สำเร็จ
+    document.getElementById('successPopup').style.display = 'flex';
 
-              registrationForm.reset();
-              if (otherNeedsDetail) {
-                otherNeedsDetail.style.display = 'none';
-              }
+    // ✅ รีเซ็ตฟอร์มลงทะเบียน
+    if (registrationForm) {
+      registrationForm.reset();
+    }
+    if (otherNeedsDetail) {
+      otherNeedsDetail.style.display = 'none';
+      otherNeedsDetail.value = '';
+    }
 
-              document.getElementById('registration-page').style.display = 'none';
-              document.getElementById('home-page').style.display = 'block';
-            } else {
-              formError.textContent = (result && result.message)
-                ? result.message
-                : 'เกิดข้อผิดพลาด กรุณาลองใหม่อีกครั้ง';
-              formError.style.display = 'block';
-            }
-          })
-          .catch(function (error) {
-            console.error('Error saving registration:', error);
-            submitBtn.disabled = false;
-            submitBtn.textContent = 'ยืนยันการลงทะเบียน';
-            submitBtn.style.opacity = '1';
+    // ✅ รีเซ็ตหน้า PDPA (ยกเลิกติ๊ก + ปิด error + ปุ่มกลับไปเป็น disable)
+    if (consentCheckbox) {
+      consentCheckbox.checked = false;
+    }
+    if (consentBtn) {
+      consentBtn.disabled = true;
+      consentBtn.style.opacity = '0.5';
+      consentBtn.style.cursor = 'not-allowed';
+      consentBtn.style.backgroundColor = '#15803d';
+    }
+    if (pdpaError) {
+      pdpaError.style.display = 'none';
+    }
 
-            formError.textContent = 'เกิดข้อผิดพลาดในการเชื่อมต่อเซิร์ฟเวอร์: ' + error;
-            formError.style.display = 'block';
+    // กลับไปหน้าแรก
+    document.getElementById('registration-page').style.display = 'none';
+    document.getElementById('home-page').style.display = 'block';
+  } else {
+    formError.textContent = (result && result.message)
+      ? result.message
+      : 'เกิดข้อผิดพลาด กรุณาลองใหม่อีกครั้ง';
+    formError.style.display = 'block';
+  }
           });
       });
     }
@@ -1427,11 +1438,30 @@ if (bigcOtherCheckbox && bigcOtherDetail) {
     const popupCloseBtn = document.getElementById("popupCloseBtn");
     const successPopup = document.getElementById("successPopup");
 
-    if (popupCloseBtn && successPopup) {
-      popupCloseBtn.addEventListener("click", function () {
-        successPopup.style.display = "none";
-      });
-    }
+    popupCloseBtn.addEventListener("click", function () {
+  successPopup.style.display = "none";
+
+  if (registrationForm) {
+    registrationForm.reset();
+  }
+
+  // reset PDPA ด้วย
+  if (consentCheckbox) {
+    consentCheckbox.checked = false;
+  }
+  if (consentBtn) {
+    consentBtn.disabled = true;
+    consentBtn.style.opacity = '0.5';
+    consentBtn.style.cursor = 'not-allowed';
+    consentBtn.style.backgroundColor = '#15803d';
+  }
+  if (pdpaError) {
+    pdpaError.style.display = 'none';
+  }
+
+  document.getElementById('registration-page').style.display = 'none';
+  document.getElementById('home-page').style.display = 'block';
+});
   </script>
 </body>
 </html>
