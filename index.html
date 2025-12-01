@@ -1137,7 +1137,7 @@ if (postalInput) {
       backHomeBtn.addEventListener('click', function () {
         pdpaError.style.display = 'none';
         document.getElementById('pdpa-page').style.display = 'none';
-        document.getElementById('home-page').style.display = 'block';
+document.getElementById('home-page').style.display = 'flex';
       });
     }
 
@@ -1161,7 +1161,7 @@ const submitBtn = document.getElementById('submit-btn');
     if (backBtn) {
       backBtn.addEventListener('click', function () {
         document.getElementById('registration-page').style.display = 'none';
-        document.getElementById('pdpa-page').style.display = 'block';
+        document.getElementById('pdpa-page').style.display = 'flex';
       });
     }
 
@@ -1457,7 +1457,7 @@ if (popupCloseBtn && successPopup) {
     const pdpaPage = document.getElementById('pdpa-page');
     const registrationPage = document.getElementById('registration-page');
 
-    if (homePage) homePage.style.display = 'block';
+    if (homePage) homePage.style.display = 'flex';
     if (pdpaPage) pdpaPage.style.display = 'none';
     if (registrationPage) registrationPage.style.display = 'none';
 
