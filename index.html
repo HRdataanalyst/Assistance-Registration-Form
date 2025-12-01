@@ -600,7 +600,7 @@ input[type="date"] {
             </select>
           </div>
 
-                    <!-- Big C Service Section -->
+                              <!-- Big C Service Section -->
           <div class="section-block">
             <h2 class="font-bold mb-0" style="color: #15803d; font-size: 1.1rem;">
               มารับบริการการช่วยเหลือที่ Big C
@@ -654,6 +654,91 @@ input[type="date"] {
             <div id="bigc-error" class="mt-1" style="color: #ef4444; display: none;">
               กรุณาเลือกอย่างน้อย 1 รายการ
             </div>
+          </div>
+
+          <!-- Damage Summary Section -->
+          <div class="section-block">
+            <h2 class="font-bold mb-0" style="color: #15803d; font-size: 1.1rem;">
+              ความเสียหาย (Damage Summary)
+            </h2>
+          </div>
+
+          <!-- ระดับความเสียหายบ้าน -->
+          <div class="mb-3 form-group">
+            <label class="block mb-2 font-medium" style="color: #334155;">
+              ระดับความเสียหายบ้าน
+            </label>
+
+            <div class="flex flex-wrap gap-2">
+              <label class="flex items-center cursor-pointer px-3 py-2 rounded border"
+                     style="border-color:#e2e8f0; background-color:#f8fafc;">
+                <input type="radio" name="damage_level" value="เล็กน้อย"
+                       class="mr-2" style="width:16px; height:16px;">
+                <span style="color:#475569;">เล็กน้อย</span>
+              </label>
+
+              <label class="flex items-center cursor-pointer px-3 py-2 rounded border"
+                     style="border-color:#e2e8f0; background-color:#f8fafc;">
+                <input type="radio" name="damage_level" value="ปานกลาง"
+                       class="mr-2" style="width:16px; height:16px;">
+                <span style="color:#475569;">ปานกลาง</span>
+              </label>
+
+              <label class="flex items-center cursor-pointer px-3 py-2 rounded border"
+                     style="border-color:#e2e8f0; background-color:#f8fafc;">
+                <input type="radio" name="damage_level" value="หนัก"
+                       class="mr-2" style="width:16px; height:16px;">
+                <span style="color:#475569;">หนัก</span>
+              </label>
+            </div>
+          </div>
+
+          <!-- ทรัพย์สินเสียหายหลัก -->
+          <div class="mb-3 form-group">
+            <label class="block mb-2 font-medium" style="color: #334155;">
+              ทรัพย์สินเสียหายหลัก (เลือกได้หลายข้อ)
+            </label>
+
+            <div class="flex flex-wrap gap-2">
+              <label class="flex items-center cursor-pointer px-3 py-2 rounded border"
+                     style="border-color:#e2e8f0; background-color:#f8fafc;">
+                <input type="checkbox" name="damage_assets" value="เครื่องใช้ไฟฟ้า"
+                       class="mr-2" style="width:16px; height:16px;">
+                <span style="color:#475569;">เครื่องใช้ไฟฟ้า</span>
+              </label>
+
+              <label class="flex items-center cursor-pointer px-3 py-2 rounded border"
+                     style="border-color:#e2e8f0; background-color:#f8fafc;">
+                <input type="checkbox" name="damage_assets" value="เฟอร์นิเจอร์"
+                       class="mr-2" style="width:16px; height:16px;">
+                <span style="color:#475569;">เฟอร์นิเจอร์</span>
+              </label>
+
+              <label class="flex items-center cursor-pointer px-3 py-2 rounded border"
+                     style="border-color:#e2e8f0; background-color:#f8fafc;">
+                <input type="checkbox" name="damage_assets" value="รถยนต์/มอเตอร์ไซค์"
+                       class="mr-2" style="width:16px; height:16px;">
+                <span style="color:#475569;">รถยนต์/มอเตอร์ไซค์</span>
+              </label>
+
+              <label class="flex items-center cursor-pointer px-3 py-2 rounded border"
+                     style="border-color:#e2e8f0; background-color:#f8fafc;">
+                <input type="checkbox" name="damage_assets" value="พื้นที่เกษตร/ปศุสัตว์"
+                       class="mr-2" style="width:16px; height:16px;">
+                <span style="color:#475569;">พื้นที่เกษตร/ปศุสัตว์</span>
+              </label>
+            </div>
+          </div>
+
+          <!-- หมายเหตุความเสียหาย -->
+          <div class="mb-4 form-group">
+            <label for="damage-note" class="block mb-1 font-medium" style="color:#334155;">
+              หมายเหตุความเสียหายที่ต้องเร่งซ่อม/แก้ไข
+            </label>
+            <textarea id="damage-note" rows="3"
+                      class="w-full px-3 py-2 border rounded"
+                      style="border-color:#cbd5e1;"
+                      placeholder="เช่น หลังคารั่ว พื้นบ้านทรุด เครื่องใช้ไฟฟ้าเสียหายจำนวนมาก ฯลฯ"></textarea>
           </div>
 
           <!-- Needs Section -->
@@ -721,6 +806,7 @@ input[type="date"] {
               กรุณาเลือกอย่างน้อย 1 รายการ
             </div>
           </div>
+
 
 
           <!-- กล่องแสดงข้อความ error ตอนบันทึกฟอร์มไม่สำเร็จ -->
@@ -1032,7 +1118,7 @@ if (bigcOtherCheckbox && bigcOtherDetail) {
       registrationForm.addEventListener('submit', function (e) {
         e.preventDefault();
 
-                const needsCheckboxes = document.querySelectorAll('input[name="needs"]:checked');
+               const needsCheckboxes = document.querySelectorAll('input[name="needs"]:checked');
         if (needsCheckboxes.length === 0) {
           needsError.style.display = 'block';
           return;
@@ -1054,6 +1140,17 @@ if (bigcOtherCheckbox && bigcOtherDetail) {
         const bigcServices = Array.from(bigcCheckboxes)
           .map(cb => cb.value)
           .join(', ');
+
+        // Damage Summary
+        const damageLevelInput = document.querySelector('input[name="damage_level"]:checked');
+        const damageLevel = damageLevelInput ? damageLevelInput.value : '';
+
+        const damageAssetsCheckboxes = document.querySelectorAll('input[name="damage_assets"]:checked');
+        const damageAssets = Array.from(damageAssetsCheckboxes)
+          .map(cb => cb.value)
+          .join(', ');
+
+        const damageNote = document.getElementById('damage-note').value.trim();
 
         const formData = {
           // ใช้ id ให้ตรงกับ input จริงในฟอร์ม
@@ -1091,6 +1188,11 @@ if (bigcOtherCheckbox && bigcOtherDetail) {
           bigc_other_detail: bigcOtherCheckbox && bigcOtherCheckbox.checked
             ? bigcOtherDetail.value.trim()
             : '',
+
+          // ความเสียหาย (Damage Summary)
+          damage_level: damageLevel,
+          damage_assets: damageAssets,
+          damage_note: damageNote,
 
           // สิ่งที่ต้องการความช่วยเหลือ
           needs: needs,
