@@ -1,0 +1,771 @@
+<!doctype html>
+<html lang="th">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <title>แบบฟอร์มลงทะเบียนผู้ประสบอุทกภัย น้ำท่วม 2568</title>
+
+  <!-- Tailwind -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- ฟอนต์ Prompt -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    *, *::before, *::after {
+  box-sizing: border-box;
+}
+
+/* หน้าเว็บปกติ ไม่บังคับขนาด ไม่ทำ responsive */
+html, body {
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+  overflow-y: auto;
+  font-family: "Prompt", sans-serif;
+  background-color: #f8fafc;
+  font-size: 16px;   /* ขนาดปกติของเว็บ */
+}
+
+/* input/label */
+input,
+select,
+textarea,
+button,
+label {
+  font-size: 1rem;
+}
+
+/* เว้นระยะคำถาม */
+.form-group {
+  margin-bottom: 1.5rem;
+}
+
+/* หัวข้อของแต่ละส่วน */
+.section-block {
+  margin-top: 2rem;
+  margin-bottom: 1rem;
+  padding-bottom: 0.25rem;
+  border-bottom: 2px solid #e2e8f0;
+}
+
+.id-card-input {
+  letter-spacing: 0.05em;
+}
+
+/* container หลักของเว็บ (ไม่ทำ responsive) */
+.app-container {
+  width: 100%;
+  margin: 0 auto;
+  height: auto;
+}
+
+/* container ของแต่ละหน้า */
+.page-container {
+  width: 100%;
+  margin: 0 auto;
+  padding: 0 24px;  /* ให้มีขอบซ้ายขวาพื้นฐานแบบเว็บ */
+}
+
+  </style>
+
+  <style>
+    @view-transition {
+      navigation: auto;
+    }
+  </style>
+</head>
+
+<body class="bg-[#f8fafc]">
+  <div class="app-container">
+
+    <!-- Popup แจ้งผลสำเร็จ -->
+    <div id="successPopup"
+         style="display:none; position: fixed; inset:0; background: rgba(0,0,0,0.4);
+                backdrop-filter: blur(2px); z-index: 9999;"
+         class="flex items-center justify-center">
+      <div style="background:white; width: 80%; max-width:320px; border-radius:12px; padding:20px; text-align:center;">
+        <h3 style="font-size:1rem; color:#15803d; font-weight:600; margin-bottom:10px;">
+          ✓ ลงทะเบียนสำเร็จ
+        </h3>
+        <p style="font-size:0.85rem; color:#475569; margin-bottom:16px;">
+          ระบบได้บันทึกข้อมูลของคุณเรียบร้อยแล้ว
+        </p>
+        <button id="popupCloseBtn"
+                style="background:#15803d; color:white; width:100%; padding:10px; border-radius:6px;">
+          ปิด
+        </button>
+      </div>
+    </div>
+
+    <!-- Home Page -->
+    <div id="home-page"
+     class="page-container w-full flex flex-col items-center justify-center text-center py-10">
+
+      <!-- Logo -->
+      <img src="https://i.postimg.cc/B6wpk3yh/cropped-Logo-BJC-Big-C-2021-2048x606.png"
+           alt="BJC Big C Logo"
+           class="mx-auto mb-6"
+           style="max-width: 260px; height: auto;"
+           onerror="this.style.display='none';">
+
+      <!-- Title -->
+      <h1 class="font-bold mb-3" style="color: #15803d; font-size: 1.6rem;">
+        แบบฟอร์มลงทะเบียนผู้ประสบภัยน้ำท่วม 2568
+      </h1>
+      <p class="mb-8" style="color: #166534; font-size: 1rem;">
+        จังหวัดสงขลา
+      </p>
+
+      <!-- Start Button -->
+      <button id="start-register-btn"
+              class="w-full max-w-xs py-3 rounded font-medium"
+              style="background-color: #15803d; color: white; font-size: 1.05rem;">
+        ลงทะเบียน
+      </button>
+    </div>
+
+    <!-- PDPA Page -->
+    <div id="pdpa-page"
+     class="page-container w-full py-6"
+     style="display: none;">
+
+        <h1 id="pdpa-title" class="font-bold mb-4"
+            style="color: #1e293b; font-size: 1.1rem; text-align: center;">
+          นโยบายการคุ้มครองข้อมูลส่วนบุคคล
+        </h1>
+
+        <!-- กล่องข้อความยาว -->
+        <div class="mb-5"
+             style="background-color: #f8fafc; padding: 16px; border-radius: 8px;
+                    border: 1px solid #e2e8f0; line-height: 1.8; font-size: 0.95rem; color: #475569; width:100%;">
+          <p class="mb-3">
+            องค์กรของเราให้ความสำคัญอย่างยิ่งต่อการคุ้มครองข้อมูลส่วนบุคคลของท่าน
+            การเก็บรวบรวม ใช้ และเปิดเผยข้อมูลส่วนบุคคลจะดำเนินการเพื่อวัตถุประสงค์ในการให้ความช่วยเหลือผู้ประสบภัยน้ำท่วมเท่านั้น
+          </p>
+
+          <p class="mb-3">
+            <strong>ข้อมูลที่เก็บรวบรวมประกอบด้วย:</strong><br>
+            - ชื่อ–นามสกุล<br>
+            - หมายเลขบัตรประชาชน<br>
+            - วันเกิด<br>
+            - เบอร์โทรศัพท์<br>
+            - รายละเอียดที่อยู่และพื้นที่ประสบภัย<br>
+            - ความต้องการความช่วยเหลือ
+          </p>
+
+          <p class="mb-3">
+            <strong>วัตถุประสงค์ในการใช้ข้อมูล:</strong><br>
+            - ใช้สำหรับประสานงานการช่วยเหลือผู้ประสบภัย<br>
+            - ใช้ในการจัดลำดับความเร่งด่วนในการช่วยเหลือ<br>
+          </p>
+
+          <p class="mb-3">
+            <strong>การเปิดเผยข้อมูล:</strong><br>
+            ข้อมูลของท่านจะไม่ถูกส่งต่อไปยังบุคคลภายนอก
+            เว้นแต่เป็นหน่วยงานที่เกี่ยวข้องกับการให้ความช่วยเหลือ
+            และจำเป็นต้องใช้ข้อมูลเพื่อประโยชน์ของผู้ประสบภัยเท่านั้น
+          </p>
+
+          <p class="mb-3">
+            <strong>การจัดเก็บและรักษาความปลอดภัยของข้อมูล:</strong><br>
+            ข้อมูลของท่านจะถูกจัดเก็บอย่างปลอดภัย
+            และจำกัดสิทธิ์การเข้าถึงเฉพาะผู้ที่เกี่ยวข้องเท่านั้น
+          </p>
+
+          <p class="mb-0">
+            หากท่านไม่ยินยอมให้ใช้ข้อมูล ระบบจะไม่สามารถดำเนินการลงทะเบียนได้
+            การอยู่ในขั้นตอนต่อไปถือว่าท่านยอมรับตามนโยบายนี้แล้ว
+          </p>
+        </div>
+
+        <!-- ช่องติ๊กยินยอม -->
+        <div class="mb-4">
+          <label class="flex items-start cursor-pointer">
+            <input type="checkbox" id="consent-checkbox" class="mt-1 mr-2"
+                   style="width: 18px; height: 18px; cursor: pointer;">
+            <span style="color: #334155; font-size: 0.95rem; line-height: 1.5;">
+              ข้าพเจ้าได้อ่านและยอมรับนโยบายการคุ้มครองข้อมูลส่วนบุคคลดังกล่าว
+            </span>
+          </label>
+        </div>
+
+        <!-- Error -->
+        <div id="pdpa-error" class="mb-3 p-2 rounded"
+             style="background-color: #fee2e2; color: #b91c1c; display: none; font-size: 0.85rem;">
+          กรุณายอมรับนโยบายก่อนดำเนินการต่อ
+        </div>
+
+        <!-- ปุ่ม -->
+        <div id="form-error" class="mb-3 p-2 rounded"
+             style="background-color: #fee2e2; color: #991b1b; display: none; font-size: 0.75rem;">
+          เกิดข้อผิดพลาด กรุณาลองใหม่อีกครั้ง
+        </div>
+
+        <div class="flex gap-2">
+          <button id="back-home-btn"
+                  class="flex-1 py-2 px-3 rounded font-medium"
+                  style="background-color: #e2e8f0; color: #475569;">
+            ย้อนกลับ
+          </button>
+          <button id="consent-btn"
+                  class="flex-1 py-2 px-3 rounded font-medium"
+                  style="background-color: #15803ด; color: white; opacity: 0.5; cursor: not-allowed;"
+                  disabled>
+            ยอมรับและดำเนินการต่อ
+          </button>
+        </div>
+
+    </div>
+
+    <!-- Registration Page -->
+    <div id="registration-page"
+     class="page-container w-full py-6 pb-20"
+     style="display: none;">
+
+        <!-- Logo Section -->
+        <div class="mb-3"
+             style="background: linear-gradient(180deg, rgba(21, 128, 61, 0.15) 0%, rgba(255, 255, 255, 0.15) 100%);
+                    padding: 12px; border-radius: 6px; margin-bottom: 12px;">
+          <div class="flex items-center mb-2">
+            <img src="https://i.postimg.cc/B6wpk3yh/cropped-Logo-BJC-Big-C-2021-2048x606.png"
+                 alt="BJC Big C Logo"
+                 style="max-width: 80px; height: auto; margin-right: 12px;"
+                 onerror="this.style.display='none';">
+            <p id="province-text" style="color: #166534; font-size: 0.9rem;">
+              จังหวัดสงขลา
+            </p>
+          </div>
+          <h1 id="form-title" class="font-bold text-center"
+              style="color: #15803d; font-size: 1.4rem;">
+            แบบฟอร์มลงทะเบียนผู้ประสบอุทกภัย น้ำท่วม 2568
+          </h1>
+        </div>
+
+        <!-- Info Banner -->
+        <div class="mb-4 p-2 rounded"
+             style="background-color: #fef3c7;">
+          <p style="color: #92400e; font-size: 0.95rem; line-height: 1.6;">
+            <strong>คำแนะนำ:</strong>
+            กรุณากรอกข้อมูลให้ครบถ้วนและถูกต้อง เพื่อให้ทีมงานสามารถประสานงานและส่งความช่วยเหลือถึงท่านได้อย่างรวดเร็ว
+          </p>
+        </div>
+
+        <form id="registration-form">
+          <!-- Personal Info Section -->
+          <div class="section-block">
+            <h2 class="font-bold mb-0" style="color: #15803d; font-size: 1.1rem;">
+              ข้อมูลส่วนตัว
+            </h2>
+          </div>
+
+          <div class="mb-3 form-group">
+            <label for="name" class="block mb-1 font-medium" style="color: #334155;">
+              ชื่อ <span style="color: #ef4444;">*</span>
+            </label>
+            <input type="text" id="name" required
+                   class="w-full border rounded p-2"
+                   style="border-color: #cbd5e1;"
+                   placeholder="กรอกชื่อ">
+          </div>
+
+          <div class="mb-3 form-group">
+            <label for="surname" class="block mb-1 font-medium" style="color: #334155;">
+              นามสกุล <span style="color: #ef4444;">*</span>
+            </label>
+            <input type="text" id="surname" required
+                   class="w-full px-3 py-2 border rounded"
+                   style="border-color: #cbd5e1;"
+                   placeholder="กรอกนามสกุล">
+          </div>
+
+          <div class="mb-3 form-group">
+            <label for="phone" class="block mb-1 font-medium" style="color: #334155;">
+              เบอร์โทรศัพท์ <span style="color: #ef4444;">*</span>
+            </label>
+            <input type="tel" id="phone" required
+                   class="w-full px-3 py-2 border rounded"
+                   style="border-color: #cbd5e1;"
+                   placeholder="0812345678"
+                   maxlength="10">
+          </div>
+
+          <div class="mb-3 form-group">
+            <label for="birthdate" class="block mb-1 font-medium" style="color: #334155;">
+              วันเกิด <span style="color: #ef4444;">*</span>
+            </label>
+            <input type="date" id="birthdate" required
+                   class="w-full px-3 py-2 border rounded"
+                   style="border-color: #cbd5e1;">
+          </div>
+
+          <div class="mb-3 form-group">
+            <label for="id-card" class="block mb-1 font-medium" style="color: #334155;">
+              หมายเลขบัตรประชาชน <span style="color: #ef4444;">*</span>
+            </label>
+            <input type="text" id="id-card" required
+                   class="w-full px-3 py-2 border rounded id-card-input"
+                   style="border-color: #cbd5e1;"
+                   placeholder="X-XXXX-XXXXX-XX-X"
+                   maxlength="17">
+          </div>
+
+          <!-- Address Section -->
+          <div class="section-block">
+            <h2 class="font-bold mb-0" style="color: #15803d; font-size: 1.1rem;">
+              ที่อยู่ (พื้นที่ประสบภัย)
+            </h2>
+          </div>
+
+          <div class="mb-3 form-group">
+            <label for="address-detail" class="block mb-1 font-medium" style="color: #334155;">
+              รายละเอียดที่อยู่ <span style="color: #ef4444;">*</span>
+            </label>
+            <textarea id="address-detail" required rows="2"
+                      class="w-full px-3 py-2 border rounded"
+                      style="border-color: #cbd5e1;"
+                      placeholder="บ้านเลขที่ หมู่ที่ ซอย ถนน หมู่บ้าน (ถ้ามี)"></textarea>
+          </div>
+
+          <div class="mb-3 form-group">
+            <label for="district" class="block mb-1 font-medium" style="color: #334155;">
+              อำเภอ <span style="color: #ef4444;">*</span>
+            </label>
+            <input type="text" id="district" required list="district-list"
+                   class="w-full px-3 py-2 border rounded"
+                   style="border-color: #cbd5e1;"
+                   placeholder="ค้นหาหรือเลือกอำเภอ">
+            <datalist id="district-list">
+              <option value="เมืองสงขลา"></option>
+              <option value="สทิงพระ"></option>
+              <option value="จะนะ"></option>
+              <option value="นาทวี"></option>
+              <option value="เทพา"></option>
+              <option value="สะบ้าย้อย"></option>
+              <option value="ระโนด"></option>
+              <option value="กระแสสินธุ์"></option>
+              <option value="รัตภูมิ"></option>
+              <option value="สะเดา"></option>
+              <option value="หาดใหญ่"></option>
+              <option value="นาหม่อม"></option>
+              <option value="ควนเนียง"></option>
+              <option value="บางกล่ำ"></option>
+              <option value="สิงหนคร"></option>
+              <option value="คลองหอยโข่ง"></option>
+            </datalist>
+          </div>
+
+          <div class="mb-3 form-group">
+            <label for="subdistrict" class="block mb-1 font-medium" style="color: #334155;">
+              ตำบล <span style="color: #ef4444;">*</span>
+            </label>
+            <input type="text" id="subdistrict" required list="subdistrict-list"
+                   class="w-full px-3 py-2 border rounded"
+                   style="border-color: #cbd5e1;"
+                   placeholder="ค้นหาหรือเลือกตำบล">
+            <datalist id="subdistrict-list">
+              <option value="บ่อยาง"></option>
+              <option value="เขารูปช้าง"></option>
+              <option value="พะวง"></option>
+              <option value="เกาะแต้ว"></option>
+              <option value="ทุ่งหวัง"></option>
+              <option value="คลองแห"></option>
+              <option value="หาดใหญ่"></option>
+              <option value="คูเต่า"></option>
+              <option value="ควนลัง"></option>
+              <option value="ท่าข้าม"></option>
+            </datalist>
+          </div>
+
+          <div class="mb-3 form-group">
+            <label for="postal-code" class="block mb-1 font-medium" style="color: #334155;">
+              รหัสไปรษณีย์ <span style="color: #ef4444;">*</span>
+            </label>
+            <input type="text" id="postal-code" required list="postal-list"
+                   class="w-full px-3 py-2 border rounded"
+                   style="border-color: #cbd5e1;"
+                   placeholder="ค้นหาหรือเลือกรหัสไปรษณีย์"
+                   maxlength="5">
+            <datalist id="postal-list">
+              <option value="90000"></option>
+              <option value="90100"></option>
+              <option value="90110"></option>
+              <option value="90120"></option>
+              <option value="90130"></option>
+              <option value="90140"></option>
+              <option value="90150"></option>
+              <option value="90160"></option>
+              <option value="90170"></option>
+              <option value="90180"></option>
+            </datalist>
+          </div>
+
+          <!-- Needs Section -->
+          <div class="section-block">
+            <h2 class="font-bold mb-0" style="color: #15803d; font-size: 1.1rem;">
+              สิ่งที่ต้องการความช่วยเหลือ
+            </h2>
+          </div>
+
+          <div class="mb-4">
+            <label class="block mb-2 font-medium" style="color: #334155;">
+              เลือกได้มากกว่า 1 รายการ <span style="color: #ef4444;">*</span>
+            </label>
+
+            <div class="space-y-1.5">
+              <label class="flex items-center cursor-pointer p-2 rounded"
+                     style="background-color: #f8fafc; border: 1px solid #e2e8f0;">
+                <input type="checkbox" name="needs" value="อาหาร/น้ำดื่ม"
+                       class="mr-2" style="width: 16px; height: 16px;">
+                <span style="color: #475569;">อาหาร/น้ำดื่ม</span>
+              </label>
+
+              <label class="flex items-center cursor-pointer p-2 rounded"
+                     style="background-color: #f8fafc; border: 1px solid #e2e8f0;">
+                <input type="checkbox" name="needs" value="ยา/ของใช้จำเป็น"
+                       class="mr-2" style="width: 16px; height: 16px;">
+                <span style="color: #475569;">ยา/ของใช้จำเป็น</span>
+              </label>
+
+              <label class="flex items-center cursor-pointer p-2 rounded"
+                     style="background-color: #f8fafc; border: 1px solid #e2e8f0;">
+                <input type="checkbox" name="needs" value="เสื้อผ้า/ผ้าห่ม"
+                       class="mr-2" style="width: 16px; height: 16px;">
+                <span style="color: #475569;">เสื้อผ้า/ผ้าห่ม</span>
+              </label>
+
+              <label class="flex items-center cursor-pointer p-2 rounded"
+                     style="background-color: #f8fafc; border: 1px solid #e2e8f0;">
+                <input type="checkbox" name="needs" value="อาหารเด็ก/นมผง"
+                       class="mr-2" style="width: 16px; height: 16px;">
+                <span style="color: #475569;">อาหารเด็ก/นมผง</span>
+              </label>
+
+              <label class="flex items-center cursor-pointer p-2 rounded"
+                     style="background-color: #f8fafc; border: 1px solid #e2e8f0;">
+                <input type="checkbox" name="needs" value="ของใช้ผู้สูงอายุ"
+                       class="mr-2" style="width: 16px; height: 16px;">
+                <span style="color: #475569;">ของใช้ผู้สูงอายุ</span>
+              </label>
+
+              <label class="flex items-center cursor-pointer p-2 rounded"
+                     style="background-color: #f8fafc; border: 1px solid #e2e8f0;">
+                <input type="checkbox" id="other-needs-checkbox" name="needs" value="อื่นๆ"
+                       class="mr-2" style="width: 16px; height: 16px;">
+                <span style="color: #475569;">อื่นๆ</span>
+              </label>
+
+              <textarea id="other-needs-detail" rows="2"
+                        class="w-full px-3 py-2 border rounded mt-1"
+                        style="border-color: #cbd5e1; display: none;"
+                        placeholder="ระบุรายละเอียด"></textarea>
+            </div>
+
+            <div id="needs-error" class="mt-1" style="color: #ef4444; display: none;">
+              กรุณาเลือกอย่างน้อย 1 รายการ
+            </div>
+          </div>
+
+          <div class="flex gap-2">
+            <button type="button" id="back-btn"
+                    class="flex-1 py-2 px-3 rounded font-medium"
+                    style="background-color: #e2e8f0; color: #475569;">
+              ย้อนกลับ
+            </button>
+            <button type="submit" id="submit-btn"
+                    class="flex-1 py-2 px-3 rounded font-medium"
+                    style="background-color: #15803d; color: #ffffff;">
+              ยืนยันการลงทะเบียน
+            </button>
+          </div>
+
+        </form>
+    </div>
+
+  </div>
+
+  <script>
+    // ==========================
+    //   Location (อำเภอ/ตำบล/รหัสไปรษณีย์)
+    // ==========================
+    let locationData = []; // เก็บข้อมูลจากชีท
+
+    const districtInput = document.getElementById('district');
+    const subdistrictInput = document.getElementById('subdistrict');
+    const postalInput = document.getElementById('postal-code');
+
+    const districtList = document.getElementById('district-list');
+    const subdistrictList = document.getElementById('subdistrict-list');
+    const postalList = document.getElementById('postal-list');
+
+    // โหลดข้อมูลจาก Google Sheet ตอนหน้าเว็บพร้อม
+    window.addEventListener('load', function () {
+      if (typeof google === 'undefined' || !google.script || !google.script.run) {
+        // ถ้าเปิดทดสอบแบบไฟล์ธรรมดา (ไม่ผ่าน Apps Script) ส่วนนี้จะไม่ทำงาน
+        return;
+      }
+
+      google.script.run
+        .withSuccessHandler(function (data) {
+          locationData = data || [];
+          buildAllDatalists();
+        })
+        .withFailureHandler(function (err) {
+          console.error('โหลดข้อมูลอำเภอ/ตำบล/รหัสไปรษณีย์ไม่สำเร็จ:', err);
+        })
+        .getLocationData();
+    });
+
+    // สร้าง datalist จากข้อมูลทั้งหมดครั้งแรก
+    function buildAllDatalists() {
+      if (!Array.isArray(locationData) || locationData.length === 0) return;
+
+      const districts = [...new Set(locationData.map(r => r.district).filter(Boolean))];
+      setOptions(districtList, districts);
+
+      const subdistricts = [...new Set(locationData.map(r => r.subdistrict).filter(Boolean))];
+      setOptions(subdistrictList, subdistricts);
+
+      const postals = [...new Set(locationData.map(r => r.postal).filter(Boolean))];
+      setOptions(postalList, postals);
+    }
+
+    function setOptions(datalistElem, items) {
+      if (!datalistElem) return;
+      datalistElem.innerHTML = '';
+      items.forEach(v => {
+        const opt = document.createElement('option');
+        opt.value = v;
+        datalistElem.appendChild(opt);
+      });
+    }
+
+    function filterLocationData() {
+      if (!Array.isArray(locationData) || locationData.length === 0) return;
+
+      const dVal = districtInput.value.trim().toLowerCase();
+      const sVal = subdistrictInput.value.trim().toLowerCase();
+      const pVal = postalInput.value.trim().toLowerCase();
+
+      let filtered = locationData.filter(row => {
+        const dMatch = !dVal || (row.district && row.district.toLowerCase().includes(dVal));
+        const sMatch = !sVal || (row.subdistrict && row.subdistrict.toLowerCase().includes(sVal));
+        const pMatch = !pVal || (row.postal && row.postal.toLowerCase().startsWith(pVal));
+        return dMatch && sMatch && pMatch;
+      });
+
+      if (filtered.length === 0) {
+        filtered = locationData;
+      }
+
+      const newDistricts = [...new Set(filtered.map(r => r.district).filter(Boolean))];
+      const newSubdistricts = [...new Set(filtered.map(r => r.subdistrict).filter(Boolean))];
+      const newPostals = [...new Set(filtered.map(r => r.postal).filter(Boolean))];
+
+      setOptions(districtList, newDistricts);
+      setOptions(subdistrictList, newSubdistricts);
+      setOptions(postalList, newPostals);
+
+      if (filtered.length === 1) {
+        if (!dVal) districtInput.value = filtered[0].district || '';
+        if (!sVal) subdistrictInput.value = filtered[0].subdistrict || '';
+        if (!pVal) postalInput.value = filtered[0].postal || '';
+      }
+    }
+
+    if (districtInput) {
+      districtInput.addEventListener('input', filterLocationData);
+    }
+    if (subdistrictInput) {
+      subdistrictInput.addEventListener('input', filterLocationData);
+    }
+    if (postalInput) {
+      postalInput.addEventListener('input', filterLocationData);
+    }
+
+    // Home Page Logic
+    const startRegisterBtn = document.getElementById('start-register-btn');
+
+    if (startRegisterBtn) {
+      startRegisterBtn.addEventListener('click', function () {
+        document.getElementById('home-page').style.display = 'none';
+        document.getElementById('pdpa-page').style.display = 'block';
+      });
+    }
+
+    // PDPA Page Logic
+    const consentCheckbox = document.getElementById('consent-checkbox');
+    const consentBtn = document.getElementById('consent-btn');
+    const pdpaError = document.getElementById('pdpa-error');
+    const backHomeBtn = document.getElementById('back-home-btn');
+
+    if (consentCheckbox && consentBtn && backHomeBtn) {
+      consentCheckbox.addEventListener('change', function () {
+        if (this.checked) {
+          consentBtn.style.opacity = '1';
+          consentBtn.style.cursor = 'pointer';
+          consentBtn.disabled = false;
+          consentBtn.style.backgroundColor = '#15803d';
+          pdpaError.style.display = 'none';
+        } else {
+          consentBtn.style.opacity = '0.5';
+          consentBtn.style.cursor = 'not-allowed';
+          consentBtn.disabled = true;
+        }
+      });
+
+      consentBtn.addEventListener('click', function () {
+        if (consentCheckbox.checked) {
+          document.getElementById('pdpa-page').style.display = 'none';
+          document.getElementById('registration-page').style.display = 'block';
+        } else {
+          pdpaError.style.display = 'block';
+        }
+      });
+
+      backHomeBtn.addEventListener('click', function () {
+        pdpaError.style.display = 'none';
+        consentCheckbox.checked = false;
+        consentBtn.style.opacity = '0.5';
+        consentBtn.style.cursor = 'not-allowed';
+        consentBtn.disabled = true;
+        document.getElementById('pdpa-page').style.display = 'none';
+        document.getElementById('home-page').style.display = 'flex';
+      });
+    }
+
+    // Registration Page Logic
+    const backBtn = document.getElementById('back-btn');
+    const registrationForm = document.getElementById('registration-form');
+    const idCardInput = document.getElementById('id-card');
+    const otherNeedsCheckbox = document.getElementById('other-needs-checkbox');
+    const otherNeedsDetail = document.getElementById('other-needs-detail');
+    const needsError = document.getElementById('needs-error');
+    const formError = document.getElementById('form-error');
+    const submitBtn = document.getElementById('submit-btn');
+
+    if (backBtn) {
+      backBtn.addEventListener('click', function () {
+        document.getElementById('registration-page').style.display = 'none';
+        document.getElementById('pdpa-page').style.display = 'block';
+      });
+    }
+
+    // Format ID card input (x-xxxx-xxxxx-xx-x)
+    if (idCardInput) {
+      idCardInput.addEventListener('input', function (e) {
+        let value = e.target.value.replace(/[^0-9]/g, '');
+        if (value.length > 13) value = value.substring(0, 13);
+
+        let formatted = '';
+        if (value.length > 0) formatted += value.substring(0, 1);
+        if (value.length > 1) formatted += '-' + value.substring(1, 5);
+        if (value.length > 5) formatted += '-' + value.substring(5, 10);
+        if (value.length > 10) formatted += '-' + value.substring(10, 12);
+        if (value.length > 12) formatted += '-' + value.substring(12, 13);
+
+        e.target.value = formatted;
+      });
+    }
+
+    // Show/hide "other" needs detail
+    if (otherNeedsCheckbox && otherNeedsDetail) {
+      otherNeedsCheckbox.addEventListener('change', function () {
+        if (this.checked) {
+          otherNeedsDetail.style.display = 'block';
+        } else {
+          otherNeedsDetail.style.display = 'none';
+          otherNeedsDetail.value = '';
+        }
+      });
+    }
+
+    // Form submission (Google Apps Script)
+    if (registrationForm && submitBtn) {
+      registrationForm.addEventListener('submit', function (e) {
+        e.preventDefault();
+
+        const needsCheckboxes = document.querySelectorAll('input[name="needs"]:checked');
+        if (needsCheckboxes.length === 0) {
+          needsError.style.display = 'block';
+          return;
+        }
+        needsError.style.display = 'none';
+
+        const needs = Array.from(needsCheckboxes)
+          .map(cb => cb.value)
+          .join(', ');
+
+        const formData = {
+          name: document.getElementById('name').value.trim(),
+          surname: document.getElementById('surname').value.trim(),
+          phone: document.getElementById('phone').value.trim(),
+          birthdate: document.getElementById('birthdate').value,
+          id_card: document.getElementById('id-card').value.trim(),
+          address_detail: document.getElementById('address-detail').value.trim(),
+          district: document.getElementById('district').value.trim(),
+          subdistrict: document.getElementById('subdistrict').value.trim(),
+          postal_code: document.getElementById('postal-code').value.trim(),
+          needs: needs,
+          other_needs: otherNeedsCheckbox && otherNeedsCheckbox.checked
+            ? otherNeedsDetail.value.trim()
+            : '',
+          submitted_at: new Date().toISOString()
+        };
+
+        submitBtn.disabled = true;
+        submitBtn.textContent = 'กำลังบันทึก...';
+        submitBtn.style.opacity = '0.5';
+        formError.style.display = 'none';
+
+        google.script.run
+          .withSuccessHandler(function (result) {
+            submitBtn.disabled = false;
+            submitBtn.textContent = 'ยืนยันการลงทะเบียน';
+            submitBtn.style.opacity = '1';
+
+            if (result && result.success) {
+              document.getElementById('successPopup').style.display = 'flex';
+
+              registrationForm.reset();
+              if (otherNeedsDetail) {
+                otherNeedsDetail.style.display = 'none';
+              }
+
+              document.getElementById('registration-page').style.display = 'none';
+              document.getElementById('home-page').style.display = 'flex';
+
+            } else {
+              formError.textContent = (result && result.message)
+                ? result.message
+                : 'เกิดข้อผิดพลาด กรุณาลองใหม่อีกครั้ง';
+              formError.style.display = 'block';
+            }
+          })
+          .withFailureHandler(function (error) {
+            submitBtn.disabled = false;
+            submitBtn.textContent = 'ยืนยันการลงทะเบียน';
+            submitBtn.style.opacity = '1';
+
+            formError.textContent = 'เกิดข้อผิดพลาดในการเชื่อมต่อเซิร์ฟเวอร์: ' + error;
+            formError.style.display = 'block';
+          })
+          .saveRegistration(formData);
+      });
+    }
+
+    // ปิด popup
+    const popupCloseBtn = document.getElementById("popupCloseBtn");
+    const successPopup = document.getElementById("successPopup");
+
+    if (popupCloseBtn && successPopup) {
+      popupCloseBtn.addEventListener("click", function () {
+        successPopup.style.display = "none";
+      });
+    }
+  </script>
+</body>
+</html>
